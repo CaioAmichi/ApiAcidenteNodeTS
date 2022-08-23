@@ -48,17 +48,17 @@ export var ObterAcidentePorId = async function (
 
 export var ObterPorIdUsuario = async function (
   id: number
-): Promise<Acidente> {
+): Promise<Acidente[]> {
 
-    const acidente = await _acidenteRepository.findOne({
-      where: {
-        Id: id,
-      },
-      relations: {
-        FkIdUsuarioTerceiros: true,
-        FkIdUsuarioCliente: true
-      },
-    });
+    const acidente = await _acidenteRepository.createQueryBuilder()
+    .leftJoinAndSelect(
+      'Acidente.FkIdUsuarioCliente',
+      'Usuario',
+      'Usuario.Id = :ID',
+      { ID: id },
+    )
+    .getMany()
+          
 
     return acidente;
   

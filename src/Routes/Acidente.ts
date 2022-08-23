@@ -36,7 +36,7 @@ export var acidenteRoutes = [
         }),
       },
     },
-    handler: _controller.ObterAcidentePorId,
+    handler: _controller.ObterAcidentePorIdUsuario,
   },
 
   {

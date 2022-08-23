@@ -1,11 +1,12 @@
 import { Acidente } from "../repository/entity/Acidente";
 import * as _acidenteService from "../service/AcidenteService";
-import {  ObterPorCpf, ObterUsuarioPorId } from "../service/UsuarioService";
+import { ObterUsuarioPorId } from "../service/UsuarioService";
 import * as Hapi from "hapi";
 import * as AcidenteInterface from "./Interfaces/InterfaceAcidente"
 import * as AcidenteMapper from "./Mapping/AcidenteMapper"
 import * as Utils from "../Utils/funcoesGlobais"
 import { Usuario } from "../repository/entity/Usuario";
+
 
 interface Validator {
   valido: boolean;
@@ -111,6 +112,32 @@ export const ObterAcidentePorId = async (
   return response.response(Acidente).code(200);
 };
 
+export const ObterAcidentePorIdUsuario = async (
+  request: AcidenteInterface.ObterPorIdRequest,
+  response: Hapi.ResponseToolkit
+) => {
+  
+  if (request == null || request.query.Id < 0) {
+    return response.response("Id Enviado Inválido").code(400);
+  }
+
+  const usuario: Usuario = await ObterUsuarioPorId(request.query.Id)
+
+  if (usuario == null) {
+    return response.response("Envie um usuario válido").code(400);
+  }
+
+    const acidentes : Acidente[] = await _acidenteService.ObterPorIdUsuario(usuario.Id);
+
+
+    if (acidentes.length == 0) {
+      return response.response().code(204);
+    }
+  
+    return response.response(acidentes).code(200);
+
+};
+
 export const AdicionarAcidente = async (
   request: AcidenteInterface.CriarAcidenteRequest,
   response: Hapi.ResponseToolkit
@@ -120,9 +147,6 @@ export const AdicionarAcidente = async (
   var cpfIgual: boolean
 
   const acidente: Acidente = await AcidenteMapper.MapeiaAcidenteCreate(request);
-
-  console.log(acidente)
-  console.log(acidente.Data)
 
   var valido = await ValidaAcidente(acidente);
   if (valido.valido == false) {

@@ -2,8 +2,7 @@ import * as AcidenteInterface from "../Interfaces/InterfaceAcidente"
 import { Acidente } from "../../repository/entity/Acidente";
 import { Endereco } from "../../repository/entity/Endereco";
 import { Usuario } from "../../repository/entity/Usuario";
-import { ClientRequest } from "http";
-import { array } from "joi";
+
 
 export async function MapeiaAcidenteCreate(IAcidente: AcidenteInterface.CriarAcidenteRequest): Promise<Acidente> {
 

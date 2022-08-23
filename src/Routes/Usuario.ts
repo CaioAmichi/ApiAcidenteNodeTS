@@ -1,9 +1,5 @@
-import jsonBeautify from "json-beautify";
 import * as _controller from "../controller/UsuarioController";
-import Joi, { compile } from "@hapi/joi";
-import Boom from "@hapi/boom";
-import * as Hapi from "hapi";
-import { HeapInfo } from "v8";
+import Joi from "@hapi/joi";
 
 export var usuarioRoutes = [
   {

@@ -1,9 +1,6 @@
-import { Console } from "console";
 import { AppDataSource } from "../repository/data-source";
 import { Endereco } from "../repository/entity/Endereco";
 import { Usuario } from "../repository/entity/Usuario";
-import * as ORM from "typeorm"
-import { resourceLimits } from "worker_threads";
 
 interface IUsuario {
   Id: Number;
