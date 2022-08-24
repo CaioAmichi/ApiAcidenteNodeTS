@@ -133,7 +133,11 @@ export const AdicionarUsuario = async (
 
     await _usuarioService.EditarUsuario(usuario);
 
-    return response.response("Cadastro já foi feito anteriormente, houve apenas uma atualização dos dados").code(200);
+    return response.response("Percebemos que você já foi um terceiro em um acidente,houve apenas uma atualização dos dados").code(200);
+  }
+  if(usuarioExiste != null && usuarioExiste.Cliente == true )
+  {
+    return response.response("Cadastro com esse CPF já foi feito anteriormente").code(400);
   }
   else{
     
